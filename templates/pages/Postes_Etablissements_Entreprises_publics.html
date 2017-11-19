@@ -1,0 +1,77 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- *DataTable* -->
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    $('table').dataTable( {
+      "columnDefs": [
+        { "orderable": false, "targets": [0,1,2,5,6,7,8]}
+      ],
+      "order": [[ 4, "desc" ]]
+    } );
+  } );
+</script>
+<div class="container" style="margin: 20px auto;">
+
+  <table class="table table-striped table-bordered" cellspacing="0" width="100%">
+      <thead>
+          <tr>
+              <th>Etablissement organisateur</th>
+              <th>Poste</th>
+              <th>Nombre postes</th>
+              <th>Date de dépôt</th>
+              <th>Date de publication</th>
+              <th>Candidats convoqués</th>
+              <th>Résultats</th>
+              <th>Contact</th>
+              <th>Fichiers attachés</th>
+          </tr>
+      </thead>
+      <tbody>
+        {% for Poste in Postes %}
+          <tr>
+            <td>{{ Poste.Etablissement_organisateur }}</td>
+            <td>{{ Poste.Poste }}</td>
+            <td>{{ Poste.Nombre_postes }}</td>
+
+            {% if Poste.Date_de_depot.year != 1000 %}
+              <td>{{ Poste.Date_de_depot|date:"Y/m/d" }}</td>
+            {% else %}
+              <td></td>
+            {% endif %}
+
+            {% if Poste.Date_publication.year != 1000 %}
+              <td>{{ Poste.Date_publication|date:"Y/m/d" }}</td>
+            {% else %}
+              <td></td>
+            {% endif %}
+
+            {% if Poste.Candidats_convoques != '-' %}
+              <td><a href="{{ Poste.Candidats_convoques }}"><img src="{% static 'images/logo_pdf.svg' %}" width="30" height="40"></a></td>
+            {% else %}
+              <td></td>
+            {% endif %}
+
+            {% if Poste.Resultats != '-' %}
+              <td><a href="{{ Poste.Resultats }}"><img src="{% static 'images/logo_pdf.svg' %}" width="30" height="40"></a></td>
+            {% else %}
+              <td></td>
+            {% endif %}
+
+            <td>{{ Poste.PPI }}</td>
+
+            {% if Poste.FA != '-' %}
+              <td><a href="{{ Concour.FA }}"><img src="{% static 'images/logo_pdf.svg' %}" width="30" height="40"></a></td>
+            {% else %}
+              <td></td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+      </tbody>
+  </table>
+</div>
+{% endblock %}

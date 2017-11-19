@@ -1,0 +1,102 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- *DataTable* -->
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    $('table').dataTable( {
+      "columnDefs": [
+        { "orderable": false, "targets": [0,1,6,7,8,9,10,11]}
+      ],
+      "order": [[ 5, "desc" ]]
+    } );
+  } );
+</script>
+<div class="container" style="margin: 20px auto;">
+
+  <table class="table table-striped table-bordered" cellspacing="0" width="100%">
+      <thead>
+          <tr>
+              <th>Administration organisatrice</th>
+              <th>Grade</th>
+              <th>Nombre postes</th>
+              <th>Délai dépôt</th>
+              <th>Date concours</th>
+              <th>Date publication</th>
+              <th>Candidats convoqués pour l'examen écrit</th>
+              <th>Candidats convoqués pour l'entretien oral</th>
+              <th>Résultats</th>
+              <th>Désistements</th>
+              <th>Contact</th>
+              <th>Fichiers attachés</th>
+          </tr>
+      </thead>
+      <tbody>
+        {% for Concour in Concours %}
+          <tr>
+            <td>
+              {{ Concour.Administration_organisatrice }}
+              {{ Concour.Etablissement_organisateur }}
+              {{ Concour.Collectivites_organisatrice }}
+            </td>
+            <td>{{ Concour.Grade }}</td>
+            <td>{{ Concour.Nombre_postes }}</td>
+
+            {% if Concour.Delai_depot.year != 1000 %}
+              <td>{{ Concour.Delai_depot|date:"Y/m/d" }}</td>
+            {% else %}
+              <td></td>
+            {% endif %}
+
+            {% if Concour.Date_concours.year != 1000 %}
+              <td>{{ Concour.Date_concours|date:"Y/m/d" }}</td>
+            {% else %}
+              <td></td>
+            {% endif %}
+
+            {% if Concour.Date_publication.year != 1000 %}
+              <td>{{ Concour.Date_publication|date:"Y/m/d" }}</td>
+            {% else %}
+              <td></td>
+            {% endif %}
+
+            {% if Concour.CCPEE != '-' %}
+              <td><a href="{{ Concour.CCPEE }}"><img src="{% static 'images/logo_pdf.svg' %}" width="30" height="40"></a></td>
+            {% else %}
+              <td></td>
+            {% endif %}
+
+            {% if Concour.CCPEO != '-' %}
+              <td><a href="{{ Concour.CCPEO }}"><img src="{% static 'images/logo_pdf.svg' %}" width="30" height="40"></a></td>
+            {% else %}
+              <td></td>
+            {% endif %}
+
+            {% if Concour.Resultats != '-' %}
+              <td><a href="{{ Concour.Resultats }}"><img src="{% static 'images/logo_pdf.svg' %}" width="30" height="40"></a></td>
+            {% else %}
+              <td></td>
+            {% endif %}
+
+            {% if Concour.Desistement != '-' %}
+              <td><a href="{{ Concour.Desistement }}"><img src="{% static 'images/logo_pdf.svg' %}" width="30" height="40"></a></td>
+            {% else %}
+              <td></td>
+            {% endif %}
+
+            <td>{{ Concour.PPI }}</td>
+
+            {% if Concour.FA != '-' %}
+              <td><a href="{{ Concour.FA }}"><img src="{% static 'images/logo_pdf.svg' %}" width="30" height="40"></a></td>
+            {% else %}
+              <td></td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+      </tbody>
+  </table>
+</div>
+{% endblock %}

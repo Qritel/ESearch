@@ -1,0 +1,36 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Connexion |{% endblock %}
+
+{% block content %}
+<div class="col-4 col-offset-4" style="margin: auto; width: 400px;">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Identifiez-vous</div>
+        <div class="panel-body">
+            {% if form.errors %}
+              <p style="color: red">Votre nom d'utilisateur et votre mot de passe ne correspondent pas. Veuillez réessayer.</p>
+            {% endif %}
+            <form method="post">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{ next }}" />
+              {% for field in form %}
+                <div class="row">
+                    <div class="form-group col-xs-12">
+                      <label for="username"><span class="text-danger" style="margin-right:5px;">*</span>{{ field.label_tag }}</label><br>
+                      {{ field }}
+                    </div>
+                </div>
+              {% endfor %}
+
+              <div class="row">
+                  <div class="form-group col-xs-12">
+                      <button class="btn btn-primary" type="submit">Connexion</button>
+                      <p>Pas encore inscrit ? <a href="{% url 'signup' %}" class="">Créer votre compte</a></p>
+                  </div>
+              </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

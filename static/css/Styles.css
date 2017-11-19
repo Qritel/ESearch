@@ -1,0 +1,22 @@
+/* fonts */
+@import url("//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css");
+
+/* navbar */
+.container { padding: 20px 0 10px 0; }
+
+.navbar-brand { position: relative; z-index: 2; font-size: 24px; }
+
+.navbar-nav.navbar-right .btn { position: relative; z-index: 2; padding: 4px 20px; margin: 10px auto; transition: transform 0.3s; }
+
+.btn.btn-circle { border-radius: 50px; background-color: transparent; }
+
+
+/* footer */
+.footer::before{
+  content: " ";
+  display: block;
+  height: 1px;
+  background-color: #1ce;
+  margin: 0.5em auto;
+  width: 8em;
+}

@@ -1,0 +1,68 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- *DataTable* -->
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    $('table').dataTable( {
+      "columnDefs": [
+        { "orderable": false, "targets": [0,1,2,5,6]}
+      ],
+      "order": [[ 4, "desc" ]]
+    } );
+  } );
+</script>
+<div class="container" style="margin: 20px auto;">
+
+  <table class="table table-striped table-bordered" cellspacing="0" width="100%">
+      <thead>
+          <tr>
+              <th>Emploi</th>
+              <th>Autorité Gouvernementale</th>
+              <th>Arrêté</th>
+              <th>Date limte de dépôt des candidatures</th>
+              <th>Date de publication</th>
+              <th>Contact</th>
+              <th>Fichiers attachés</th>
+          </tr>
+      </thead>
+      <tbody>
+        {% for Emploi in Emplois_sup %}
+          <tr>
+            <td>{{ Emploi.Emploi }}</td>
+            <td>{{ Emploi.Autorite_Gouvernementale }}</td>
+
+            {% if Emploi.Arrete != '-' %}
+              <td><a href="{{ Emploi.Arrete }}"><img src="{% static 'images/logo_pdf.svg' %}" width="30" height="40"></a></td>
+            {% else %}
+              <td></td>
+            {% endif %}
+
+            {% if Emploi.Date_limite.year != 1000 %}
+              <td>{{ Emploi.Date_limite|date:"Y/m/d" }}</td>
+            {% else %}
+              <td></td>
+            {% endif %}
+
+            {% if Emploi.Date_publication.year != 1000 %}
+              <td>{{ Emploi.Date_publication|date:"Y/m/d" }}</td>
+            {% else %}
+              <td></td>
+            {% endif %}
+
+            <td>{{ Emploi.PPI }}</td>
+
+            {% if Emploi.FA != '-' %}
+              <td><a href="{{ Emploi.FA }}"><img src="{% static 'images/logo_pdf.svg' %}" width="30" height="40"></a></td>
+            {% else %}
+              <td></td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+      </tbody>
+  </table>
+</div>
+{% endblock %}

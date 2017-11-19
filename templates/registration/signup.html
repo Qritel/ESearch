@@ -1,0 +1,37 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}S'inscrire |{% endblock %}
+
+{% block content %}
+<div class="col-4 col-offset-4" style="margin: auto; width: 500px;">
+    <div class="panel panel-primary">
+        <div class="panel-heading">S'inscrire</div>
+        <div class="panel-body">
+          <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+              <div class="row">
+                  <div class="form-group col-xs-12">
+                    <label for="username"><span class="text-danger" style="margin-right:5px;">*</span>{{ field.label_tag }}</label><br>
+                    {{ field }}<br>
+                    {% if field.help_text %}
+                      <small style="color: grey">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                      <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                  </div>
+              </div>
+            {% endfor %}
+
+            <div class="row">
+                <div class="form-group col-xs-12">
+                    <button class="btn btn-primary" type="submit">S'inscrire</button>
+                </div>
+            </div>
+
+          </form>
+      </div>
+  </div>
+</div>
+{% endblock %}
